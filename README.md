@@ -1,19 +1,33 @@
 # Introduction to SQL
 
 1.  What makes SQL a nonprocedural language?
+SQL is a nonprocedural language because the program’s actions are pre-defined instead of having to be manually done.
+
 2.  How can you tell whether a database is truly relational?
+Apple Dr. Codd’s 12 (we know there are 13) rules.
+
 3.  What can you do with SQL?
+SQL can let us to insert, modify, select and delete the information in a database; handle online transaction processing within an application; transfer data between different databases; create stored procedures and triggers to reduces application coding.
+
 4.  Name the process that separates data into distinct, unique sets.
+Normalization reduces the amount of repetition and complexity of the structure of previous level.
+
 5.  Do the following statements return the same or different output:
 
     SELECT * FROM ARRESTS;
     select * from arrests;
+It should be same output, the only difference between that two statements is on statement is uppercase another is lowercase.
 
 1.  None of the following queries work. Why not?
 
     select *;
+The FROM clause is missing.
+
     Select * from checks
+The semicolon is missing.
+
     Select amount name payee FROM checks;
+This need a comma between each column name like Select amount, name, payee FROM checks
 
 1.  Which of the following SQL statements will work?
 
@@ -22,6 +36,7 @@
     select * from checks;
     select * from checks
     /
+All the above will work.
 
 Given the following table description for the arrests table: 
 
@@ -48,10 +63,14 @@ Do the following:
 
 1.  Write a query to return just the check officerId and the topCharge.
 
+SELECT OFFICERED, TOPCHARGE FROM ARRESTS;
+
 2.  Rewrite the query from exercise 1 so that the topCharge will appear
     as the first column in your query results.
+SELECT TOPCHARGE, OFFICERED FROM ARRESTS;
 
 3.  Using the arrests table, write a query to return all the unique topCharges.
+SELECT DISTINCT TOPCHARGES FROM ARRESTS;
 
 Use the doubleAgents table to answer the following questions.
 
@@ -155,12 +174,20 @@ Use the doubleAgents table to answer the following questions.
 </table>
 
 1.  Write a query that returns everyone in the database whose last name begins with M.
+SELECT * FROM FRIENDS WHERE LASTNAME LIKE 'M%';
+
 2.  Write a query that returns everyone who lives in Illinois with a first name of AL.
+SELECT * FROM FRIENDS
+WHERE STATE = ‘IL’
+AND FIRSTNAME = ‘AL’;
+
 3.  What shorthand could you use instead of WHERE a >= 10 AND a <=30?
+WHERE BETWEEN 10 AND 30;
+
 4.  What will this query return?
 
     SELECT FIRSTNAME
-    FROM DOUBLE_AGENTS
+    FROM FRIENDS
     WHERE FIRSTNAME = 'AL'
       AND LASTNAME = 'BULHER';
 
@@ -227,25 +254,34 @@ Use the doubleAgents table to answer the following questions.
 </table>
 
 1.  Which function capitalizes the first letter of a character string and makes the rest lowercase?
+INITCAP
+
 2.  Which functions are also known by the *same* name?
+GROUP FUNCTION
+
 3.  Will this query work?
 
     SELECT COUNT(LASTNAME) FROM CHARACTERS;
+YES
 
 1.  How about this one?
 
     SELECT SUM(LASTNAME) FROM CHARACTERS
+NO, BECAUSE THE QUERY WONT WORK, LASTNAME IS A CHARACTER FIELD.
 
 1.  Assuming that they are separate columns, which function(s) would
     splice together FIRSTNAME and LASTNAME?
+The concat function and the | | symbol 
 
 1.  What does the answer 37 mean from the following SELECT?
 
     SELECT COUNT(*) FROM drone_strikes;
+37 is a number 
 
 1.  Will the following statement work? (Hint: look up substr)
 
     SELECT SUBSTR LASTNAME,1,5 FROM NAME_TBL;
+No, missing () around LASTNAME
 
 Marksmanship table:
 
@@ -275,6 +311,8 @@ Marksmanship table:
 </table>
 
 1.  Using a table called SHOOTSTATS table, write a query to determine who is are on target less than .25.
+SELECT NAME FROM SHOOTSTATS
+WHERE (hits/shotstaken)< .25;
 
 2.  Using today's OFFICERS table, write a query that will return the following:
 
@@ -337,8 +375,10 @@ OUTPUT:
 </table>
 
 1.  Which clause works just like LIKE(<exp>%)? (HINT: Look it up on google.)
+STARTING WITH
 
 2.  What is the function of the GROUP BY clause, and what other clause does it act like?
+The GROUP BY clause groups data result sets that have been manipulated by various functions. It is act like the ORDER BY clause
 
 3.  Will this SELECT work?
 
@@ -347,10 +387,13 @@ OUTPUT:
         WHERE DEPARTMENT = 'SWAT'
         ORDER BY NAME
         GROUP BY DEPARTMENT, SALARY;
+no,the syntax is incorrect
 
 1.  When using the HAVING clause, do you always have to use a GROUP BY also?
+yes
 
 2.  Can you use ORDER BY on a column that is not one of the columns in the SELECT statement?
+Yes, it is not necessary to use the SELECT statement
 
 1.  Using the ORGCHART table from the following examples, find out how many people on each team have 30 or more days of sick leave.
 
@@ -469,3 +512,5 @@ INPUT:
     FROM ORGCHART
     WHERE SICKLEAVE >=30
     GROUP BY TEAM;
+
+The output shows the number of people on each team with a SICKLEAVE balance of 30 days or more.
